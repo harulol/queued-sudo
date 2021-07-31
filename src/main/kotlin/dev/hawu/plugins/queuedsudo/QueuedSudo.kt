@@ -15,11 +15,11 @@ class QueuedSudo : JavaPlugin() {
         ConfigurationSerialization.registerClass(AwaitExecutable::class.java)
         ConfigurationSerialization.registerClass(DefaultExecutable::class.java)
         ConfigurationSerialization.registerClass(RepeatingExecutable::class.java)
-        ConfigurationSerialization.registerClass(TimedExecutable::class.java)
         
         I18n.init(this)
         WorldManager.init(this)
         BaseCommand(this)
+        server.pluginManager.registerEvents(EventsManager, this)
     }
     
     override fun onDisable() {

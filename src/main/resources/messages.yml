@@ -56,6 +56,9 @@ help-index:
   - "  &frun&7: Schedules a queued executable."
   - "  &freload&7: Reloads the messages file."
   - "  &fsearch&7: Searches for a world group."
+  - "  &frename&7: Renames an existing group."
+  - "  &fdelete&7: Deletes an/multiple existing group(s)."
+  - "  &flist&7: Lists all created groups."
   - ""
   - "&7Attach &8-? &7or &8--help &7to a sub-command for more detailed instructions."
 

@@ -1,0 +1,278 @@
+# ----- [BEFORE YOU EDIT THIS] -----
+# Make sure to keep a copy of this somewhere else, updates
+# might have more stuff to configure, and as a result, this
+# file may be wiped and reset to default.
+#
+# Each node can either be a line or multiple lines.
+# Nodes that don't specify their placeholders mean that they don't have any, don't use PAPI placeholders.
+#
+#===========================================#
+#                INFORMATION                #
+# Messages that are meant to provide        #
+# additional information, and do not belong #
+# to any other categories.                  #
+#===========================================#
+
+# Sent to the sender when they answered something else to a yes-no question.
+# Accepted values are: yes, no, true, false, on and off.
+invalid-boolean: "&c&l(!) &7That answer is inapplicable to a &cyes-no&7 question."
+
+# Sent to the sender when they specified an invalid UUID.
+invalid-uuid: "&c&l(!) &7That was not a valid UUID."
+
+# Sent to the sender when they inputted an invalid number.
+# %input%: The input the sender sent.
+not-a-number: "&c&l(!) &e%input% &7is not a valid number."
+
+#===========================================#
+#                 COMMANDS                  #
+# Messages that are sent as a result of     #
+# using commands and for command feedbacks. #
+#===========================================#
+
+# Sent to the sender when they don't have a permission node.
+# %perm%: Permission node that they are lacking.
+no-permissions: "&c&l(!) &7You don't have permission."
+
+# Sent to the sender when the command inputted does not conform to the syntax.
+# %usage%: The command's usage.
+correct-usage: "&c&l(!) &7Try &a%usage%&7."
+
+# Sent to the sender after successfully created a new group.
+# %name%: The newly created group's name, replaced with a red "Unnamed" if no name was specified.
+# %worlds%: The worlds attached. If empty, replaced with a red "None".
+created-group: "&c&l(!) &7Created new group named &e%name%&7 with attached worlds: %worlds%&7."
+
+# Sent to the sender when they execute the main command without any arguments.
+# %version%: Replaced with the plugin's version.
+help-index:
+  - "&7Queued Sudos v%version%"
+  - "&7Welcome to QueuedSudos! You may use this command's CLI features or using full-fledged GUIs designed for Players."
+  - ""
+  - "&7Usage: &aqs [options]"
+  - ""
+  - "&7The following commands are available:"
+  - "  &fcreate&7: Creates a new world group."
+  - "  &frun&7: Schedules a queued executable."
+  - "  &freload&7: Reloads the messages file."
+  - "  &fsearch&7: Searches for a world group."
+  - ""
+  - "&7Attach &8-? &7or &8--help &7to a sub-command for more detailed instructions."
+
+# Sent to the sender when they request help on the "create" sub-command.
+# %version%: Replaced with the plugin's version.
+help-create:
+  - "&7Queued Sudos v%version%"
+  - "&7Creates a new world group for scheduling executables in."
+  - ""
+  - "&7Usage: &aqs create [arguments] [options]"
+  - ""
+  - "&7The following arguments are available:"
+  - "  &f-n&7, &f--name&7: Specify the name of this new group."
+  - "  &f-w&7, &f--world&7: Specify the world to attach to this group, case-sensitive."
+  - ""
+  - "&7The following options are available:"
+  - "  &f-i&7, &f--interactive&7: Opens a conversation to create a group interactively."
+  - "  &f-g&7, &f--gui&7: Configures this group creation via an Inventory GUI, for players &conly&7."
+  - ""
+  - "&7For more help, please refer to the GitHub repository."
+
+# Sent to the sender when they request help on the "run" sub-command.
+# %version%: Replaced with the plugin's version.
+help-run:
+  - "&7Queued Sudos v%version%"
+  - "&7Queues an executable for a player in a world group."
+  - ""
+  - "&7Usage: &aqs run <player> [arguments] [options]"
+  - ""
+  - "&7The following arguments are available:"
+  - "  &f-g&7, &f--group&7: Specify the name of the world group to queue this executable."
+  - "  &f-e&7, &f--executable&7: The executable to run."
+  - "  &f-a&7: Specify the duration to wait before running this executable."
+  - "  &f--rt&7: Specify the number of times to run this executable."
+  - "  &f--rv&7: Specify the interval between runs."
+  - ""
+  - "&7The following options are available:"
+  - "  &f-c&7: Lookup the group name with case-sensitively."
+  - "  &f--op&7: Specify that the executable should be dispatched by the player as an OP."
+  - "  &f--console&7: Specify that the executable should be dispatched by console."
+  - ""
+  - "&7For more help, please refer to the GitHub repository."
+
+# Sent to the sender when they request help on the search subcommand.
+# %version%: Replaced with the plugin's version.
+help-search:
+  - "&7Queued Sudos v%version%"
+  - "&7Searches for groups with some options and filters."
+  - ""
+  - "&7Usage: &aqs search <[-q|--query] query> [arguments] [options]"
+  - ""
+  - "&7The following arguments are available:"
+  - "  &f-q&7, &f--query&7: Specify explicitly the query to search with."
+  - "  &f-n&7, &f--count&7: Shows only up to this amount of groups."
+  - ""
+  - "&7The following options are available:"
+  - "  &f-c&7: Force results to be matched case-sensitively."
+  - "  &f--uuid&7: Force results to be matched with the groups' UUIDs."
+  - "  &f--world&7: Force lookup the group using the query as a world name."
+  - ""
+  - "&7For more help, please refer to the GitHub repository."
+
+# Sent to the sender when they request help on the list subcommand.
+# %version%: Replaced with the plugin's version.
+help-list:
+  - "&7Queued Sudos v%version%"
+  - "&7Lists all groups registered."
+  - ""
+  - "&7Usage: &aqs list [arguments] [options]"
+  - ""
+  - "&7The following arguments are available:"
+  - "  &f-n&7, &f--count&7: Shows only up to this amount of groups."
+  - ""
+  - "&7The following options are available:"
+  - "  &f--worlds&7: Shows all worlds attached along with the number of worlds."
+  - "  &f--no-uuid&7: Don't display the worlds' UUIDs."
+  - "  &f--suppress&7: Don't display the warnings when there are duplicate names."
+  - ""
+  - "&7For more help, please refer to the GitHub repository."
+
+# Sent to the sender when they request help on the rename subcommand.
+# %version%: Replaced with the plugin's version.
+help-rename:
+  - "&7Queued Sudos v%version%"
+  - "&7Renames a registered group."
+  - ""
+  - "&7Usage: &aqs rename [arguments] [options]"
+  - ""
+  - "&7The following arguments are available:"
+  - "  &f-g&7, &f--group&7: Specify the group to rename."
+  - "  &f-n&7, &f--name&7: Specify the new name of this group."
+  - ""
+  - "&7The following options are available:"
+  - "  &f-c7: Looks up the group case-insensitively."
+  - "  &f--uuid&7: Looks up the group by its UUID."
+  - "  &f--world&7: Looks up the group by its worlds."
+  - ""
+  - "&7For more help, please refer to the GitHub repository."
+
+# Sent to the sender when they request help on the delete subcommand.
+# %version%: Replaced with the plugin's version.
+help-delete:
+  - "&7Queued Sudos v%version%"
+  - "&7Deletes a registered group."
+  - ""
+  - "&7Usage: &aqs delete <group> [options]"
+  - ""
+  - "&7The following options are available:"
+  - "  &f-c&7: Looks up the group case-insensitively."
+  - "  &f--uuid&7: Looks up the group by its UUID."
+  - "  &f--world&7: Looks up the group by its worlds."
+  - "  &f--ignore-multiples&7: Deletes all even if results matched against multiple groups."
+  - ""
+  - "&7For more help, please refer to the GitHub repository."
+
+# Sent to the sender after they renamed a group.
+# %old%: The group's old name.
+# %new%: The group's new name.
+group-renamed: "&a&l(!) &7Renamed group from &c%old%&7 to &a%new%&7."
+
+# Sent to the sender after they deleted a group.
+# %name%: The name of the deleted group.
+# %uuid%: The uuid of the group.
+group-deleted: "&a&l(!) &7Deleted group &a%name%&7 (%uuid%)"
+
+# Sent to the sender when they execute a command with missing required properties.
+missing-properties: "&c&l(!) &7You did not specify the required properties."
+
+# Sent to the player when they try to queue a sudo on an OP player or another player that is exempt to it.
+op-player: "&c&l(!) &7That player is exempt to sudos."
+
+# Sent to the player when they specify a non-existent group.
+group-not-found: "&c&l(!) &7Group &e%group%&7 could not be found."
+
+# The format to send to the user when the search founds groups.
+group-found:
+  - "&7Found &b%name%&7:"
+  - "&7  - UUID: &f%uuid%"
+  - "&7  - Attached worlds: &a%worlds_count%"
+  - "&7  - Queued executables: &a%executables_count%&7 executables for &a%players_count%&7 players"
+
+# Sent to the player when no groups have been found.
+no-groups-found: "&c&l(!) &7No groups found matching input criteria."
+
+# Sent to the user when they specify a non-unique group name.
+multiple-groups: "&c&l(!) &7Multiple groups found. Please refine your inputs."
+
+# Sent to the user after invoking the reload command.
+reloaded: "&a&l(!) &7Reloaded messages."
+
+# Sent to the user after queuing an awaiting executable.
+# %player%: The player that was sudo-ed.
+queued-await: "&a&l(!) &7You have queued an &cawaiting &7executable for &a%player%&7."
+
+# Sent to the user after queuing a repeating executable.
+# %player%: The player that was sudo-ed.
+queued-repeating: "&a&l(!) &7You have queued a &erepeating &7executable for &a%player%&7."
+
+# Sent to the user after queuing an executable.
+# %player%: The player that was sudo-ed.
+queued-default: "&a&l(!) &7You have queued an &bexecutable&7 for &a%player%&7."
+
+#===========================================#
+#               CONVERSATIONS               #
+# Messages that are sent to users during    #
+# conversations with the plugin.            #
+#===========================================#
+
+# These messages are prompted in a conversation to create a new world group.
+create-group:
+
+  # The prefix that prepends all prompts.
+  prefix: "&6&lQueuedSudo &8| &6Group Creation &8> "
+
+  # When the plugin wants to ask whether the user wants to name the newly created group.
+  name-request: "&7Would you like to &cname&7 this group?"
+
+  # When the plugin wants to take in the name of the group.
+  name: "&7Please type in the &cname&7 for this group."
+
+  # When the plugin wants to ask whether the user wants to add worlds to the newly created group.
+  attach-worlds-request: "&7Would you like to also &cadd worlds &7to this group?"
+
+  # When the plugin wants the user to type in the name of the world they want to add.
+  attach-worlds-name: "&7Please type in the &cname&7 of the world you want to add &8(case-sensitive)&7. Type &ecancel &7to stop adding."
+
+  # When the user specified a non-existent world.
+  world-does-not-exist: "&7Could not find world &a%world%&7."
+
+  # When the world already exists in that group.
+  world-already-added: "&7That world is &calready added&7."
+
+  # When the world was added successfully.
+  world-added: "&7Added world &a%world%&7 to group."
+
+  # When the user typed in "cancel" in
+  cancellation-confirmation: "&7Type &ayes&7 if you wanted to cancel, &cno&7 if you wanted to add a world named &ecancel&7."
+
+  # Sent as a confirmation to how to end this conversation.
+  confirmation: "&7Are you sure you want to create this group?"
+
+  # Sent when the confirmation was cancelled.
+  cancelled: "&7Deleted last created group."
+
+  # Sent when the confirmation was confirmed.
+  # %command%: The command equivalent of the entire conversation.
+  confirmed: "&7Successfully created new group. This may be done via CLI using &a%command%&7."
+
+#===========================================#
+#               MISCELLANEOUS               #
+# Messages that don't belong to any other   #
+# categories.                               #
+#===========================================#
+
+# Sent to the console if the UUID generator generated a UUID
+# that has already been used and cached.
+# You will probably never see this lol.
+duplicate-uuid:
+  - "&d&lCRAZY RARE! &7Your server generated a &cduplicate &7UUID!"
+  - "&8( Unless your server does not have a strong enough generator or you are extremely lucky. )"

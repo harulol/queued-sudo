@@ -1,0 +1,44 @@
+name: QueuedSudos
+main: dev.hawu.plugins.queuedsudo.QueuedSudo
+description: Overhauled version of the original Queued Sudos.
+version: 2.0-dev-b37
+website: https://github.com/harulol/queued-sudo
+authors: [Hatsuharu, Homura]
+depend: [HikariLibrary, Kotlin]
+commands:
+  queuedsudo:
+    aliases: [qs]
+    description: The main command of this plugin.
+permissions:
+  queued-sudo.*:
+    default: false
+    description: Allows access to all other nodes in this plugin.
+    children:
+      - "queued-sudo.main"
+      - "queued-sudo.exempt"
+      - "queued-sudo.reload"
+      - "queued-sudo.create"
+      - "queued-sudo.list"
+      - "queued-sudo.rename"
+      - "queued-sudo.delete"
+  queued-sudo.renmae:
+    default: op
+    description: Allows access to the "rename" subcommand.
+  queued-sudo.delete:
+    default: op
+    description: Allows access to the "delete" subcommand.
+  queued-sudo.list:
+    default: op
+    description: Allows access to the "list" subcommand.
+  queued-sudo.create:
+    default: op
+    description: Allows access to the "create" subcommand.
+  queued-sudo.main:
+    default: op
+    description: Allows access to the main command.
+  queued-sudo.exempt:
+    default: op
+    description: Prevents the holder from being queued sudo'd.
+  queued-sudo.reload:
+    default: op
+    description: Allows access to the "reload" subcommand.

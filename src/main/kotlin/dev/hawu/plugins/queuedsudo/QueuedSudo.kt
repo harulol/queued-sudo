@@ -2,11 +2,9 @@ package dev.hawu.plugins.queuedsudo
 
 import dev.hawu.plugins.queuedsudo.commands.BaseCommand
 import dev.hawu.plugins.queuedsudo.executables.*
+import org.bukkit.Bukkit
 import org.bukkit.configuration.serialization.ConfigurationSerialization
-import org.bukkit.plugin.PluginDescriptionFile
 import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.plugin.java.JavaPluginLoader
-import java.io.File
 
 class QueuedSudo : JavaPlugin() {
     
@@ -24,6 +22,7 @@ class QueuedSudo : JavaPlugin() {
     
     override fun onDisable() {
         WorldManager.clear()
+        Bukkit.getScheduler().cancelTasks(this)
     }
 
 }

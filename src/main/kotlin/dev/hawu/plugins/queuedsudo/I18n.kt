@@ -27,6 +27,7 @@ object I18n {
             messages.reload()
         } catch(fnf: FileNotFoundException) {
             plugin.saveResource("messages.yml", true)
+            messages.reload()
         }
     }
     

@@ -1,7 +1,6 @@
 package dev.hawu.plugins.queuedsudo
 
 import com.google.common.collect.ArrayListMultimap
-import com.google.common.collect.HashMultimap
 import dev.hawu.plugins.api.data.YamlFile
 import dev.hawu.plugins.queuedsudo.I18n.tl
 import org.bukkit.Bukkit
@@ -9,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
 object WorldManager {
-
+    
     private lateinit var plugin: JavaPlugin
     private val groups = mutableMapOf<UUID, WorldGroup>()
     
@@ -29,8 +28,8 @@ object WorldManager {
         val file = YamlFile(pl.dataFolder, "groups.yml")
         if(file["groups"] == null || file["groups"] !is List<*>) return
         
-        (file["groups"] as List<*>).forEach {
-            try {
+        try {
+            (file["groups"] as List<*>).forEach {
                 val group = it as WorldGroup
                 groups[group.uuid] = group
                 groupNamesLookup.put(group.name?.lowercase(), group)
@@ -39,8 +38,8 @@ object WorldManager {
                     worldsLookup.put(w.lowercase(), group)
                     worlds.put(w, group)
                 }
-            } catch(ignored: Exception) {}
-        }
+            }
+        } catch(ignored: ClassCastException) {}
     }
     
     fun save() {
@@ -109,14 +108,17 @@ object WorldManager {
         groups.remove(group.uuid)
     }
     
-    fun lookupGroups(query: String, ignoresCase: Boolean, byName: Boolean, byWorld: Boolean): List<WorldGroup> = when {
+    fun getAllGroups() = groups.values
+    
+    fun lookupGroups(query: String?, ignoresCase: Boolean, byName: Boolean, byWorld: Boolean): List<WorldGroup> = when {
         byName -> lookupGroupsByName(query, ignoresCase)
         byWorld -> lookupGroupsByWorld(query, ignoresCase)
         else -> lookupGroupsByName(query, ignoresCase).ifEmpty { lookupGroupsByWorld(query, ignoresCase) }
     }
     
-    fun lookupGroupsByName(name: String, ignoresCase: Boolean): List<WorldGroup> = if(ignoresCase) groupNamesLookup.get(name.lowercase()) else groupNames.get(name)
-    fun lookupGroupsByWorld(worldName: String, ignoresCase: Boolean): List<WorldGroup> = if(ignoresCase) worldsLookup.get(worldName.lowercase()) else worlds.get(worldName)
+    fun lookupGroupsByName(name: String?, ignoresCase: Boolean): List<WorldGroup> = if(ignoresCase) groupNamesLookup.get(name?.lowercase()) else groupNames.get(name)
+    fun lookupGroupsByWorld(worldName: String?, ignoresCase: Boolean): List<WorldGroup> = if(ignoresCase) worldsLookup.get(worldName?.lowercase()) else worlds.get(worldName)
+    fun lookupGroup(uuid: UUID) = groups[uuid]
     
     // Generate a random UUID that has not been used for a group, even though the likelihood is very low.
     private fun generateUUID(): UUID = UUID.randomUUID().run {

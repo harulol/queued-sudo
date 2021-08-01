@@ -6,12 +6,13 @@ import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
+import java.io.FileNotFoundException
 
 object I18n {
     
     private lateinit var plugin: JavaPlugin
     
-    lateinit var messages: YamlFile
+    private lateinit var messages: YamlFile
     private lateinit var default: FileConfiguration
     
     fun init(pl: JavaPlugin) {
@@ -19,6 +20,14 @@ object I18n {
         pl.saveResource("messages.yml", false)
         messages = YamlFile(pl.dataFolder, "messages.yml")
         default = YamlConfiguration.loadConfiguration(pl.getResource("messages.yml").bufferedReader())
+    }
+    
+    fun reload() {
+        try {
+            messages.reload()
+        } catch(fnf: FileNotFoundException) {
+            plugin.saveResource("messages.yml", true)
+        }
     }
     
     @Suppress("UNCHECKED_CAST")

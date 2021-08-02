@@ -17,6 +17,8 @@ class BaseCommand(private val plugin: JavaPlugin) : CommandSpec({
     "list" bindTo ListCommand(plugin)
     "rename" bindTo RenameCommand(plugin)
     "delete" bindTo DeleteCommand(plugin)
+    "addworld" bindTo AddWorldCommand(plugin)
+    "removeworld" bindTo RemoveWorldCommand(plugin)
     
     on command { sender, _ ->
         sender.sendMessage("help-index".tl("version" to plugin.description.version))
@@ -31,6 +33,8 @@ class BaseCommand(private val plugin: JavaPlugin) : CommandSpec({
         "list",
         "rename",
         "delete",
+        "addworld",
+        "removeworld",
     ).filter { it.startsWith(args[0]) } else null }
     
     register to plugin

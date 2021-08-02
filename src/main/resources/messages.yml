@@ -174,6 +174,44 @@ help-delete:
   - ""
   - "&7For more help, please refer to the GitHub repository."
 
+# Sent to the sender when they request help on the addworld command.
+# %version%: Replaced with the plugin's version.
+help-add-world:
+  - "&7Queued Sudos v%version%"
+  - "&7Adds a world or multiple to a registered group."
+  - ""
+  - "&7Usage: &aqs addworld [arguments] [options]"
+  - ""
+  - "&7The following arguments are available:"
+  - "  &f-g&7, &f--group&7: Specify the group to add to."
+  - "  &f-w&7, &f--world&7: Specify the worlds to be added."
+  - ""
+  - "&7The following options are available:"
+  - "  &f-c&7: Looks up the group by name case-sensitively."
+  - "  &f--uuid&7: Looks up the group by its UUID."
+  - "  &f--world&7: Looks up the group by its worlds."
+  - ""
+  - "&7For more help, please refer to the GitHub repository."
+
+# Sent to the sender when they request help on the removeworld command.
+# %version%: Replaced with the plugin's version.
+help-remove-world:
+  - "&7Queued Sudos v%version%"
+  - "&7Removes a world or multiple from a registered group."
+  - ""
+  - "&7Usage: &aqs removeworld [arguments] [options]"
+  - ""
+  - "&7The following arguments are available:"
+  - "  &f-g&7, &f--group&7: Specify the group to add to."
+  - "  &f-w&7, &f--world&7: Specify the worlds to be added."
+  - ""
+  - "&7The following options are available:"
+  - "  &f-c&7: Looks up the group by name case-sensitively."
+  - "  &f--uuid&7: Looks up the group by its UUID."
+  - "  &f--world&7: Looks up the group by its worlds."
+  - ""
+  - "&7For more help, please refer to the GitHub repository."
+
 # Sent to the sender after they renamed a group.
 # %old%: The group's old name.
 # %new%: The group's new name.
@@ -183,6 +221,21 @@ group-renamed: "&a&l(!) &7Renamed group from &c%old%&7 to &a%new%&7."
 # %name%: The name of the deleted group.
 # %uuid%: The uuid of the group.
 group-deleted: "&a&l(!) &7Deleted group &a%name%&7 (%uuid%)"
+
+# Sent to the sender when they add a world that already exists in a group.
+# %world%: The world specified.
+# %group%: The group specified.
+world-already-added: "&c&l(!) &7Already added &e%world% &7to &a%group%&7."
+
+# Sent to the sender when they successfully add a world to a group.
+# %world%: The world specified.
+# %group%: The group specified.
+world-added: "&a&l(!) &7Added &e%world% &7to &a%group%&7."
+
+# Sent to the sender when they removed a world from a group.
+# %world%: The world specified.
+# %group%: The group specified.
+world-removed: "&c&l(!) &7Removed &e%world% &7from &a%group%&7."
 
 # Sent to the sender when they execute a command with missing required properties.
 missing-properties: "&c&l(!) &7You did not specify the required properties."

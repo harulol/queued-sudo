@@ -32,7 +32,8 @@ class DeleteCommand(private val pl: JavaPlugin) : CommandSpec({
             list.isEmpty() -> source.tl("no-groups-found")
             list.size > 1 && !ignoreMultiple -> source.tl("multiple-groups")
             else -> {
-                list.forEach {
+                list.indices.forEach { num ->
+                    val it = list[num]
                     source.tl("group-deleted", "name" to (it.name ?: "&cUnnamed"), "uuid" to it.uuid.toString())
                     WorldManager.deleteGroup(it)
                 }

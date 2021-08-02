@@ -116,8 +116,8 @@ object WorldManager {
         else -> lookupGroupsByName(query, ignoresCase).ifEmpty { lookupGroupsByWorld(query, ignoresCase) }
     }
     
-    fun lookupGroupsByName(name: String?, ignoresCase: Boolean): List<WorldGroup> = if(ignoresCase) groupNamesLookup.get(name?.lowercase()) else groupNames.get(name)
-    fun lookupGroupsByWorld(worldName: String?, ignoresCase: Boolean): List<WorldGroup> = if(ignoresCase) worldsLookup.get(worldName?.lowercase()) else worlds.get(worldName)
+    fun lookupGroupsByName(name: String?, ignoresCase: Boolean): List<WorldGroup> = if(ignoresCase) groupNamesLookup.get(name?.lowercase()).toList() else groupNames.get(name).toList()
+    fun lookupGroupsByWorld(worldName: String?, ignoresCase: Boolean): List<WorldGroup> = if(ignoresCase) worldsLookup.get(worldName?.lowercase()).toList() else worlds.get(worldName).toList()
     fun lookupGroup(uuid: UUID) = groups[uuid]
     
     // Generate a random UUID that has not been used for a group, even though the likelihood is very low.

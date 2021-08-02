@@ -72,7 +72,12 @@ class RunCommand(private val pl: JavaPlugin) : CommandSpec({
                     return@command true
                 }
                 
-                group[0].queueExecutable(args[0].toOfflinePlayer(), RepeatingExecutable(executable, flag, properties.get("--rt").first().toInt(), properties.get("--rv").first().toLong()))
+                group[0].queueExecutable(args[0].toOfflinePlayer(), RepeatingExecutable(
+                    value = executable,
+                    flag = flag,
+                    times = properties.get("--rt").first().toInt(),
+                    interval = TimeDurationConverter.convertTimestamp(properties.get("--rv").first()).roundToLong() / 50,
+                ))
                 sender.tl("queued-repeating", "player" to args[0])
             }
             else -> {

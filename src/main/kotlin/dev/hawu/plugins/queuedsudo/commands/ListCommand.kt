@@ -13,7 +13,7 @@ class ListCommand(private val plugin: JavaPlugin) : CommandSpec({
     on command { source, args ->
         val (_, properties) = args.parse()
         
-        if(args.isEmpty() || properties.containsKey("-?") || properties.containsKey("--help")) {
+        if(properties.containsKey("-?") || properties.containsKey("--help")) {
             source.tl("help-list", "version" to plugin.description.version)
             return@command true
         }
@@ -24,6 +24,11 @@ class ListCommand(private val plugin: JavaPlugin) : CommandSpec({
         val showWorlds = properties.containsKey("--worlds")
         
         val map = mutableMapOf<String?, String>()
+        
+        if(WorldManager.getAllGroups().isEmpty()) {
+            source.tl("no-groups-found")
+            return@command true
+        }
         
         var displayed = 0
         for(group in WorldManager.getAllGroups()) {

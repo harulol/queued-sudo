@@ -1,6 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     java
     kotlin("jvm") version "1.5.21"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 setProperty("libsDirName", name)
@@ -23,11 +26,12 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
+configurations.getByName("implementation").isCanBeResolved = true
+var fileName: String? = null
 
-tasks.getByName<Jar>("jar") {
+fun computeFileName(): String {
+    if(fileName != null) return fileName!!
+    
     val buildFile = File("./build.txt")
     var lastVersion = ""
     var lastBuild = 0
@@ -47,13 +51,12 @@ tasks.getByName<Jar>("jar") {
     
     lastBuild++
     
-    val buildType = System.getenv("build")
-    when(buildType?.toLowerCase()) {
-        "dev" -> archiveFileName.set("${project.name}-$lastVersion-dev-b$lastBuild.jar")
-        "pre", "prerelease" -> archiveFileName.set("${project.name}-$lastVersion-PRE.jar")
-        "rel", "release", "production" -> archiveFileName.set("${project.name}-$lastVersion.jar")
-        "snapshot" -> archiveFileName.set("${project.name}-$lastVersion-SNAPSHOT.jar")
-        null -> println("Weird...")
+    val name: String = when(System.getenv("build")?.toLowerCase()) {
+        "dev" -> "${project.name}-$lastVersion-dev-b$lastBuild"
+        "pre", "prerelease" -> "${project.name}-$lastVersion-PRE"
+        "rel", "release", "production" -> "${project.name}-$lastVersion"
+        "snapshot" -> "${project.name}-$lastVersion-SNAPSHOT"
+        null -> "${project.name}-$lastVersion-UNKNOWN"
         else -> throw IllegalArgumentException("Unrecognized build notice.")
     }
     
@@ -63,4 +66,60 @@ tasks.getByName<Jar>("jar") {
         flush()
         close()
     }
+    
+    fileName = name
+    return name
+}
+
+tasks.getByName<Test>("test") {
+    useJUnitPlatform()
+}
+
+tasks.getByName<ShadowJar>("shadowJar") {
+    minimize()
+    exclude("META-INF/INDEX.LIST", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+    configurations = listOf(project.configurations.getByName("implementation"))
+    dependencies {
+        include(dependency(dependencies.kotlin("stdlib")))
+        include(dependency("dev.hawu.plugins:HikariLibrary:.*"))
+        exclude(dependency("org.bukkit:bukkit:.*"))
+        exclude(dependency("org.jetbrains:annotations:.*"))
+    }
+    relocate("dev.hawu.plugins.api", "dev.hawu.plugins.queuedsudo.libs.api")
+    relocate("kotlin", "dev.hawu.plugins.queuedsudo.libs.kotlin")
+    
+    group = "shadow"
+    description = "An uber jar that does not need any external dependencies."
+    archiveFileName.set("${computeFileName()}-all.jar")
+    conventionMapping.map("classifier") {
+        "all"
+    }
+    
+    manifest.inheritFrom(project.tasks.getByName<Jar>("jar").manifest)
+}
+
+tasks.create<ShadowJar>("no-lib") {
+    minimize()
+    exclude("META-INF/INDEX.LIST", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+    configurations = listOf(project.configurations.getByName("implementation"))
+    dependencies {
+        exclude(dependency(dependencies.kotlin("stdlib")))
+        include(dependency("dev.hawu.plugins:HikariLibrary:.*"))
+        exclude(dependency("org.bukkit:bukkit:.*"))
+        exclude(dependency("org.jetbrains:annotations:.*"))
+    }
+    relocate("dev.hawu.plugins.api", "dev.hawu.plugins.queuedsudo.libs.api")
+    
+    group = "shadow"
+    description = "A jar that contains this project's classes and the library that requires Kotlin to run."
+    archiveFileName.set("${computeFileName()}-noLib.jar")
+    conventionMapping.map("classifier") {
+        "all"
+    }
+    from(tasks.getByName<Jar>("jar").outputs)
+    manifest.inheritFrom(project.tasks.getByName<Jar>("jar").manifest)
+}
+
+tasks.getByName<Jar>("jar") {
+    archiveFileName.set("${computeFileName()}.jar")
 }

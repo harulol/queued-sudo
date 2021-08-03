@@ -4,7 +4,7 @@ description: Overhauled version of the original Queued Sudos.
 version: 2.0-dev
 website: https://github.com/harulol/queued-sudo
 authors: [Hatsuharu, Homura]
-depend: [HikariLibrary, Kotlin]
+softdepend: [HikariLibrary, Kotlin]
 commands:
   queuedsudo:
     aliases: [qs]

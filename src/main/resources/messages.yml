@@ -243,6 +243,9 @@ missing-properties: "&c&l(!) &7You did not specify the required properties."
 # Sent to the player when they try to queue a sudo on an OP player or another player that is exempt to it.
 op-player: "&c&l(!) &7That player is exempt to sudos."
 
+# Sent to the user when the player they specified could not be found.
+player-not-found: "&c&l(!) &7That player could not be found."
+
 # Sent to the player when they specify a non-existent group.
 group-not-found: "&c&l(!) &7Group &e%group%&7 could not be found."
 

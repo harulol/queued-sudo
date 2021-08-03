@@ -1,6 +1,7 @@
 package dev.hawu.plugins.queuedsudo.commands
 
 import dev.hawu.plugins.api.dsl.commands.CommandSpec
+import dev.hawu.plugins.api.utils.PlayerUtils.toKnownOfflinePlayer
 import dev.hawu.plugins.api.utils.PlayerUtils.toOfflinePlayer
 import dev.hawu.plugins.api.utils.PlayerUtils.toPlayer
 import dev.hawu.plugins.api.utils.TimeDurationConverter
@@ -17,21 +18,25 @@ class RunCommand(private val pl: JavaPlugin) : CommandSpec({
     permissionMessage.set("no-permissions".tl("perm" to "queued-sudo.run"))
     
     on command { sender, args ->
-        val (_, properties) = args.parse()
+        val (arguments, properties) = args.parse()
         
-        if(args.isEmpty() || properties.containsKey("-?") || properties.containsKey("--help")) {
-            sender.tl("help-run", "version" to pl.description.version)
-            return@command true
-        }
-        
-        if((properties.get("-g").isEmpty() && properties.get("--group").isEmpty()) || (properties.get("-e").isEmpty() && properties.get("--executable").isEmpty())) {
-            sender.tl("missing-properties")
-            return@command true
-        }
-        
-        if((args[0].toPlayer()?.hasPermission("queued-sudo.exempt") == true || args[0].toOfflinePlayer().isOp) && sender.base !is ConsoleCommandSender) {
-            sender.tl("op-player")
-            return@command true
+        when {
+            args.isEmpty() || properties.containsKey("-?") || properties.containsKey("--help") -> {
+                sender.tl("help-run", "version" to pl.description.version)
+                return@command true
+            }
+            (properties.get("-g").isEmpty() && properties.get("--group").isEmpty()) || (properties.get("-e").isEmpty() && properties.get("--executable").isEmpty()) -> {
+                sender.tl("missing-properties")
+                return@command true
+            }
+            arguments[0].toKnownOfflinePlayer() == null || !arguments[0].toOfflinePlayer().hasPlayedBefore() -> {
+                sender.tl("player-not-found")
+                return@command true
+            }
+            (arguments[0].toPlayer()?.hasPermission("queued-sudo.exempt") == true || arguments[0].toOfflinePlayer().isOp) && sender.base !is ConsoleCommandSender -> {
+                sender.tl("op-player")
+                return@command true
+            }
         }
         
         val groupQuery = properties.get("-g").firstOrNull() ?: properties.get("--group").first()
@@ -59,8 +64,8 @@ class RunCommand(private val pl: JavaPlugin) : CommandSpec({
                 }
                 
                 val duration = TimeDurationConverter.convertTimestamp(properties.get("-a").first()).roundToLong() / 50
-                group[0].queueExecutable(args[0].toOfflinePlayer(), AwaitExecutable(executable, flag, duration))
-                sender.tl("queued-await", "player" to args[0])
+                group[0].queueExecutable(arguments[0].toOfflinePlayer(), AwaitExecutable(executable, flag, duration))
+                sender.tl("queued-await", "player" to arguments[0])
             }
             properties.containsKey("--rv") || properties.containsKey("--rt") -> {
                 if(properties.get("--rt").firstOrNull() == null || properties.get("--rv").firstOrNull() == null) {
@@ -72,17 +77,17 @@ class RunCommand(private val pl: JavaPlugin) : CommandSpec({
                     return@command true
                 }
                 
-                group[0].queueExecutable(args[0].toOfflinePlayer(), RepeatingExecutable(
+                group[0].queueExecutable(arguments[0].toOfflinePlayer(), RepeatingExecutable(
                     value = executable,
                     flag = flag,
                     times = properties.get("--rt").first().toInt(),
                     interval = TimeDurationConverter.convertTimestamp(properties.get("--rv").first()).roundToLong() / 50,
                 ))
-                sender.tl("queued-repeating", "player" to args[0])
+                sender.tl("queued-repeating", "player" to arguments[0])
             }
             else -> {
-                group[0].queueExecutable(args[0].toOfflinePlayer(), DefaultExecutable(executable, flag))
-                sender.tl("queued-default", "player" to args[0])
+                group[0].queueExecutable(arguments[0].toOfflinePlayer(), DefaultExecutable(executable, flag))
+                sender.tl("queued-default", "player" to arguments[0])
             }
         }
         

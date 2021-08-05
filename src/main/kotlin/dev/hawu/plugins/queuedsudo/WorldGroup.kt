@@ -47,7 +47,7 @@ class WorldGroup(
             uuid = map["uuid"].toString().toUUID(),
             name = map["name"]?.toString(),
             worlds = map["worlds"] as MutableList<String>,
-            executables = map["executables"] as MutableMap<UUID, MutableList<Executable>>,
+            executables = (map["executables"] as MutableMap<String, MutableList<Executable>>).mapKeys { it.key.toUUID() }.toMutableMap(),
         )
         
     }

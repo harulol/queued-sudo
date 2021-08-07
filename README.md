@@ -55,3 +55,15 @@ If "-s" is an option:
 | queued-sudo.reload | OP | Allows access to the "reload" subcommand. |
 | queued-sudo.search | OP | Allows access to the "search" subcommand. |
 | queued-sudo.* | None | Allows access to all other nodes in this plugin. |
+
+## Screenshots & Videos
+
+<details>
+<summary>Group Creation GUI</summary>
+
+**BETA!**
+
+<video controls="true" allowfullscreen="true">
+    <source src="./data/gui-create.mp4" type="video/mp4" />
+</video>
+</details>

@@ -121,5 +121,28 @@ tasks.create<ShadowJar>("no-lib") {
 }
 
 tasks.getByName<Jar>("jar") {
+    ant.withGroovyBuilder {
+        println("pp")
+        "replace"(
+            "file" to "src/main/resources/plugin.yml",
+            "token" to "@VERSION@",
+            "value" to computeFileName(),
+        )
+    }
+
     archiveFileName.set("${computeFileName()}.jar")
 }
+
+val fixup = tasks.create("fixup") {
+    doLast {
+        ant.withGroovyBuilder {
+            "replace"(
+                "file" to "src/main/resources/plugin.yml",
+                "token" to computeFileName(),
+                "value" to "@VERSION@",
+            )
+        }
+    }
+}
+
+tasks.getByName("shadowJar").finalizedBy(fixup)

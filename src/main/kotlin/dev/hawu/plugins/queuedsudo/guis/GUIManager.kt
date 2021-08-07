@@ -11,8 +11,11 @@ import dev.hawu.plugins.api.inventory.UItemStack
 import dev.hawu.plugins.queuedsudo.I18n.tl
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.plugin.java.JavaPlugin
 
 object GUIManager {
+
+    lateinit var plugin: JavaPlugin
 
     private val previousButtons = intArrayOf(18, 27)
     private val nextButtons = intArrayOf(26, 35)

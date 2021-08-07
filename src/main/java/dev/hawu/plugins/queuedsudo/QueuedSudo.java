@@ -2,6 +2,7 @@ package dev.hawu.plugins.queuedsudo;
 
 import dev.hawu.plugins.queuedsudo.commands.BaseCommand;
 import dev.hawu.plugins.queuedsudo.executables.*;
+import dev.hawu.plugins.queuedsudo.guis.GUIManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -42,6 +43,7 @@ public class QueuedSudo extends JavaPlugin {
 
         I18n.INSTANCE.init(this);
         WorldManager.INSTANCE.init(this);
+        GUIManager.plugin = this;
         new BaseCommand(this);
         getServer().getPluginManager().registerEvents(EventsManager.INSTANCE, this);
     }

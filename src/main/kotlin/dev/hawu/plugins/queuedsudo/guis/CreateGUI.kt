@@ -20,6 +20,7 @@ object CreateGUI {
         pane {
             rows.set(3)
             title.set("Group Creation")
+            plugin.set(GUIManager.plugin)
 
             position(2, 1) {
                 type.set(Material.SIGN)

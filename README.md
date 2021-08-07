@@ -1,6 +1,6 @@
 <div align="center">
 
-# dev.hawu.plugins.queuedsudo.QueuedSudo
+# QueuedSudo
 Basically Essentials' `/sudo` but they can be queued.
 
 ![GitHub](https://img.shields.io/github/license/harulol/queued-sudo?color=red&style=for-the-badge) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/harulol/queued-sudo?color=yellow&include_prereleases&style=for-the-badge)
@@ -13,6 +13,7 @@ Basically Essentials' `/sudo` but they can be queued.
 - `RepeatingExecutable`s. These are invoked a certain number of times with intervals between.
 - CLI management.
 - Customizable messages.
+- GUIs to configure.
 
 ## Commands
 The main and base command is `queuedsudo` with aliases. Commands documentation is available in-game.

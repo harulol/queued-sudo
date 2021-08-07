@@ -38,6 +38,12 @@ no-permissions: "&c&l(!) &7You don't have permission."
 # %usage%: The command's usage.
 correct-usage: "&c&l(!) &7Try &a%usage%&7."
 
+# Sent to the sender when they used a player-exclusive command.
+players-only: "&c&l(!) &7Only players may execute this feature."
+
+# Sent to the player when they want to change or add a filter.
+search-filter: "&6&l(!) &7Please type in the term to filter with."
+
 # Sent to the sender after successfully created a new group.
 # %name%: The newly created group's name, replaced with a red "Unnamed" if no name was specified.
 # %worlds%: The worlds attached. If empty, replaced with a red "None".

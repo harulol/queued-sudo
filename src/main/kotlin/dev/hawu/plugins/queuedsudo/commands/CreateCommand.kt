@@ -5,9 +5,12 @@ import dev.hawu.plugins.api.dsl.commands.CommandSpec
 import dev.hawu.plugins.api.dsl.conversations.ConversationSpec.Companion.conversation
 import dev.hawu.plugins.queuedsudo.I18n.tl
 import dev.hawu.plugins.queuedsudo.WorldManager
+import dev.hawu.plugins.queuedsudo.guis.CreateGUI
 import org.bukkit.Bukkit
 import org.bukkit.conversations.Conversable
+import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import sun.audio.AudioPlayer.player
 
 class CreateCommand(private val pl: JavaPlugin) : CommandSpec({
     
@@ -90,14 +93,20 @@ class CreateCommand(private val pl: JavaPlugin) : CommandSpec({
     on command { source, args ->
         val (_, properties) = args.parse()
         
-        if(args.isEmpty() || properties.containsKey("-?") || properties.containsKey("--help")) {
-            source.tl("help-create", "version" to pl.description.version)
-            return@command true
-        }
-        
-        if(properties.containsKey("-i") || properties.containsKey("--interactive")) {
-            startConversation(source)
-            return@command true
+        when {
+            args.isEmpty() || properties.containsKey("-?") || properties.containsKey("--help") -> {
+                source.tl("help-create", "version" to pl.description.version)
+                return@command true
+            }
+            properties.containsKey("-i") || properties.containsKey("--interactive") -> {
+                startConversation(source)
+                return@command true
+            }
+            properties.containsKey("-g") || properties.containsKey("--gui") -> {
+                if(source.base is Player) CreateGUI.open(source.base as Player, WorldManager.createNewEmptyGroup())
+                else source.tl("players-only")
+                return@command true
+            }
         }
         
         val addedWorlds = properties.get("-w").apply { addAll(properties.get("--world")) }.distinct()

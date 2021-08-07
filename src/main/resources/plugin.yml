@@ -1,7 +1,7 @@
 name: QueuedSudos
 main: dev.hawu.plugins.queuedsudo.QueuedSudo
 description: Overhauled version of the original Queued Sudos.
-version: 2.0-dev
+version: @VERSION@
 website: https://github.com/harulol/queued-sudo
 authors: [Hatsuharu, Homura]
 softdepend: [HikariLibrary, Kotlin]

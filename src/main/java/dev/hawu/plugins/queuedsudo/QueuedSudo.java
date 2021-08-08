@@ -6,6 +6,7 @@ import dev.hawu.plugins.queuedsudo.guis.GUIManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class QueuedSudo extends JavaPlugin {
@@ -17,6 +18,8 @@ public class QueuedSudo extends JavaPlugin {
         apiShaded = isApiShaded();
         kotlinShaded = isKotlinShaded();
 
+        Plugin library = Bukkit.getPluginManager().getPlugin("HikariLibrary");
+
         if(!kotlinShaded && Bukkit.getPluginManager().getPlugin("Kotlin") == null) {
             sendConsole("&c&l(!) &eQueuedSudos&c was developed in Kotlin.&r");
             sendConsole("&c&l(!) To be able to use this plugin, you can do either:&r");
@@ -26,7 +29,7 @@ public class QueuedSudo extends JavaPlugin {
             return;
         }
 
-        if(!apiShaded && Bukkit.getPluginManager().getPlugin("HikariLibrary") == null) {
+        if(!apiShaded && (library == null || !library.isEnabled())) {
             sendConsole("&c&l(!) &eQueuedSudos&c was developed against a framework.&r");
             sendConsole("&c&l(!) To be able to use this plugin, you can do either:&r");
             sendConsole("&c  - Install an external dependency &ePlugin Library&c here: &bhttps://github.com/harulol/plugin-library/releases&r");

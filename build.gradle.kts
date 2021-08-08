@@ -122,7 +122,6 @@ tasks.create<ShadowJar>("no-lib") {
 
 tasks.getByName<Jar>("jar") {
     ant.withGroovyBuilder {
-        println("pp")
         "replace"(
             "file" to "src/main/resources/plugin.yml",
             "token" to "@VERSION@",

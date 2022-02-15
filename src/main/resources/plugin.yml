@@ -1,0 +1,5 @@
+name: QueuedSudo
+version: 2.0-SNAPSHOT
+main: dev.hawu.plugins.queuedsudo
+description: Queue a /sudo until a player joins a world.
+author: Hawu

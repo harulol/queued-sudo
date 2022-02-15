@@ -1,3 +1,7 @@
 package dev.hawu.plugins.queuedsudo.executables
 
-class ExecutableType
+/**
+ * Specifies how the executable will be run.
+ */
+enum ExecutableType:
+   case SELF, OP, CONSOLE

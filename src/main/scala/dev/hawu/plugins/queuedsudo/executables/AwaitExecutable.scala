@@ -1,5 +1,7 @@
 package dev.hawu.plugins.queuedsudo.executables
 
+import dev.hawu.plugins.api.Tasks
+import dev.hawu.plugins.queuedsudo.QueuedSudo
 import org.apache.commons.lang.builder.HashCodeBuilder
 
 import java.util
@@ -35,6 +37,9 @@ class AwaitExecutable(
       "chat" -> chat,
       "delay" -> delay,
    ).asJava
+
+   override def execute(): Unit =
+      Tasks.scheduleLater(QueuedSudo.getInstance, delay, runnable => super.execute())
 
    override def hashCode(): Int = HashCodeBuilder().append(uuid).append(value).append(flag).append(chat).append(delay).toHashCode
 

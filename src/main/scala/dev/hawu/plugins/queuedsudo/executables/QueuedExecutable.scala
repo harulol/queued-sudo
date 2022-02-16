@@ -20,7 +20,6 @@ class QueuedExecutable(
    value: String,
    flag: ExecutableType,
    chat: Boolean,
-   val instant: Boolean,
 ) extends Executable(uuid, value, flag, chat) :
 
    /**
@@ -33,17 +32,16 @@ class QueuedExecutable(
       "value" -> value,
       "flag" -> flag.ordinal,
       "chat" -> chat,
-      "instant" -> instant,
    ).asJava
 
-   override def hashCode(): Int = HashCodeBuilder().append(uuid).append(value).append(flag).append(chat).append(instant).hashCode()
+   override def hashCode(): Int = HashCodeBuilder().append(uuid).append(value).append(flag).append(chat).hashCode()
 
    override def equals(obj: Any): Boolean = obj match
-      case that: QueuedExecutable => that.uuid == uuid && that.value == value && that.flag == flag && that.chat == chat && that.instant == instant
+      case that: QueuedExecutable => that.uuid == uuid && that.value == value && that.flag == flag && that.chat == chat
       case _ => false
    end equals
 
-   override def toString: String = s"QueuedExecutable(uuid=$uuid, value=$value, flag=$flag, chat=$chat, instant=$instant)"
+   override def toString: String = s"QueuedExecutable(uuid=$uuid, value=$value, flag=$flag, chat=$chat)"
 
 /**
  * The companion object for [[QueuedExecutable]].
@@ -59,5 +57,4 @@ object QueuedExecutable:
     */
    def deserialize(map: util.Map[String, Any]): QueuedExecutable =
       val (uuid, value, flag, chat) = Executable.unapplyFromMap(map)
-      val instant = map.get("instant").toString.toBoolean
-      QueuedExecutable(uuid, value, flag, chat, instant)
+      QueuedExecutable(uuid, value, flag, chat)

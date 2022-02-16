@@ -27,8 +27,9 @@ trait Executable(
     * Attempts to perform a command via the player
     * or via the console.
     */
-   final def execute(): Unit =
+   def execute(): Unit =
       val player = Bukkit.getPlayer(uuid)
+      if player == null then return
       flag match
          case ExecutableType.SELF => operate(player, value)
          case ExecutableType.OP =>

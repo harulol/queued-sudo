@@ -1,5 +1,7 @@
 package dev.hawu.plugins.queuedsudo.executables
 
+import dev.hawu.plugins.api.Tasks
+import dev.hawu.plugins.queuedsudo.QueuedSudo
 import org.apache.commons.lang.builder.HashCodeBuilder
 
 import java.util
@@ -42,6 +44,15 @@ class RepeatingExecutable(
       "interval" -> interval,
       "times" -> times,
    ).asJava
+
+   override def execute(): Unit =
+      var operations = 0
+      Tasks.scheduleTimer(QueuedSudo.getInstance, delay, interval, runnable => {
+         if operations < times then
+            super.execute()
+            operations += 1
+         else runnable.cancel()
+      })
 
    override def hashCode(): Int = HashCodeBuilder().append(uuid).append(value).append(flag).append(chat).append(delay).append(interval).append(times).toHashCode
 

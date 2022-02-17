@@ -19,11 +19,12 @@ import scala.jdk.CollectionConverters.*
  */
 class AwaitExecutable(
    uuid: UUID,
+   group: String,
    value: String,
    flag: ExecutableType,
    chat: Boolean,
    val delay: Long,
-) extends Executable(uuid, value, flag, chat) :
+) extends Executable(uuid, group, value, flag, chat) :
 
    /**
     * Serializes the executable to a map.
@@ -32,6 +33,7 @@ class AwaitExecutable(
     */
    override def serialize(): util.Map[String, Any] = Map(
       "uuid" -> uuid.toString,
+      "group" -> group,
       "value" -> value,
       "flag" -> flag.ordinal,
       "chat" -> chat,
@@ -41,13 +43,13 @@ class AwaitExecutable(
    override def execute(): Unit =
       Tasks.scheduleLater(QueuedSudo.getInstance, delay, runnable => super.execute())
 
-   override def hashCode(): Int = HashCodeBuilder().append(uuid).append(value).append(flag).append(chat).append(delay).toHashCode
+   override def hashCode(): Int = HashCodeBuilder().append(uuid).append(group).append(value).append(flag).append(chat).append(delay).toHashCode
 
    override def equals(obj: Any): Boolean = obj match
       case exe: AwaitExecutable => exe.asInstanceOf[Executable].equals(this.asInstanceOf[Executable]) && exe.delay == delay
       case _ => false
 
-   override def toString: String = s"AwaitExecutable(uuid=$uuid, value=$value, flag=$flag, chat=$chat, delay=$delay)"
+   override def toString: String = s"AwaitExecutable(uuid=$uuid, group=$group, value=$value, flag=$flag, chat=$chat, delay=$delay)"
 
 /**
  * Companion object for [[AwaitExecutable]].
@@ -61,6 +63,6 @@ object AwaitExecutable:
     * @return the executable
     */
    def deserialize(map: util.Map[String, Any]): AwaitExecutable =
-      val (uuid, value, flag, chat) = Executable.unapplyFromMap(map)
+      val (uuid, group, value, flag, chat) = Executable.unapplyFromMap(map)
       val delay = map.get("delay").toString.toLong
-      AwaitExecutable(uuid, value, flag, chat, delay)
+      AwaitExecutable(uuid, group, value, flag, chat, delay)

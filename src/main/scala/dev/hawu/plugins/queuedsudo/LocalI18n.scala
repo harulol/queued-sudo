@@ -30,6 +30,12 @@ object LocalI18n:
       i18n = None
       plugin = None
 
+   /**
+    * Reloads the messages file.
+    */
+   def reload(): Unit =
+      i18n.foreach(_.reload())
+
    extension (key: String) {
 
       /**

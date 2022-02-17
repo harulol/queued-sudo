@@ -1,0 +1,10 @@
+help:
+  base:
+    - "&7Command utility of Queued Sudos."
+    - "&fUsage: &a/qs [args]"
+    - ""
+    - "&7The following commands are available:"
+    - "&agroups&f: Groups-related command utility"
+    - "&asudo&f: Sudo-related command utility"
+    - "&areload&f: Reload the plugin's config files"
+reloaded: "&a&l(!) &aReloaded messages."

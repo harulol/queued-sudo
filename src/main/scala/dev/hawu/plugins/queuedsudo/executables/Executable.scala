@@ -12,6 +12,7 @@ import java.util.UUID
  */
 trait Executable(
    val uuid: UUID,
+   val group: String,
    val value: String,
    val flag: ExecutableType,
    val chat: Boolean,
@@ -30,14 +31,14 @@ trait Executable(
    def execute(): Unit =
       val player = Bukkit.getPlayer(uuid)
       if player == null then return
-      flag match
-         case ExecutableType.SELF => operate(player, value)
-         case ExecutableType.OP =>
-            val op = player.isOp
-            player.setOp(true)
-            operate(player, value)
-            player.setOp(op)
-         case ExecutableType.CONSOLE => Bukkit.dispatchCommand(Bukkit.getConsoleSender, value)
+         flag match
+            case ExecutableType.SELF => operate(player, value)
+            case ExecutableType.OP =>
+               val op = player.isOp
+               player.setOp(true)
+               operate(player, value)
+               player.setOp(op)
+            case ExecutableType.CONSOLE => Bukkit.dispatchCommand(Bukkit.getConsoleSender, value)
    end execute
 
    def hashCode(): Int
@@ -45,15 +46,25 @@ trait Executable(
    def toString: String
 
    override def equals(obj: Any): Boolean = obj match
-      case other: Executable => uuid == other.uuid && value == other.value && flag == other.flag && chat == other.chat && queueTime == other.queueTime
+      case other: Executable => uuid == other.uuid && group == other.group && value == other.value && flag == other.flag && chat == other.chat && queueTime == other.queueTime
       case _ => false
 
+/**
+ * The companion object for [[Executable]].
+ */
 object Executable:
 
-   def unapplyFromMap(map: util.Map[String, Any]): (UUID, String, ExecutableType, Boolean) =
+   /**
+    * Extracts the common values from the native map.
+    *
+    * @param map the map to extract the values from
+    * @return the extracted values
+    */
+   def unapplyFromMap(map: util.Map[String, Any]): (UUID, String, String, ExecutableType, Boolean) =
       val uuid = UUID.fromString(map.get("uuid").toString)
+      val group = map.get("group").toString
       val value = map.get("value").toString
       val flag = ExecutableType.fromOrdinal(map.get("flag").toString.toInt)
       val chat = map.get("chat").toString.toBoolean
 
-      (uuid, value, flag, chat)
+      (uuid, group, value, flag, chat)

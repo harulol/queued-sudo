@@ -17,10 +17,11 @@ import scala.jdk.CollectionConverters.*
  */
 class QueuedExecutable(
    uuid: UUID,
+   group: String,
    value: String,
    flag: ExecutableType,
    chat: Boolean,
-) extends Executable(uuid, value, flag, chat) :
+) extends Executable(uuid, group, value, flag, chat) :
 
    /**
     * Serializes this executable to a map of data.
@@ -29,19 +30,20 @@ class QueuedExecutable(
     */
    override def serialize(): util.Map[String, Any] = Map(
       "uuid" -> uuid.toString,
+      "group" -> group,
       "value" -> value,
       "flag" -> flag.ordinal,
       "chat" -> chat,
    ).asJava
 
-   override def hashCode(): Int = HashCodeBuilder().append(uuid).append(value).append(flag).append(chat).hashCode()
+   override def hashCode(): Int = HashCodeBuilder().append(uuid).append(group).append(value).append(flag).append(chat).hashCode()
 
    override def equals(obj: Any): Boolean = obj match
-      case that: QueuedExecutable => that.uuid == uuid && that.value == value && that.flag == flag && that.chat == chat
+      case that: QueuedExecutable => that.uuid == uuid && group == that.group && that.value == value && that.flag == flag && that.chat == chat
       case _ => false
    end equals
 
-   override def toString: String = s"QueuedExecutable(uuid=$uuid, value=$value, flag=$flag, chat=$chat)"
+   override def toString: String = s"QueuedExecutable(uuid=$uuid, group=$group, value=$value, flag=$flag, chat=$chat)"
 
 /**
  * The companion object for [[QueuedExecutable]].
@@ -56,5 +58,5 @@ object QueuedExecutable:
     * @return The instant executable
     */
    def deserialize(map: util.Map[String, Any]): QueuedExecutable =
-      val (uuid, value, flag, chat) = Executable.unapplyFromMap(map)
-      QueuedExecutable(uuid, value, flag, chat)
+      val (uuid, group, value, flag, chat) = Executable.unapplyFromMap(map)
+      QueuedExecutable(uuid, group, value, flag, chat)

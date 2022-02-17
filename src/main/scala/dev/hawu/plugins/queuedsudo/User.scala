@@ -30,10 +30,13 @@ case class User(
    ).asJava
 
    /**
-    * Runs all queued up executables.
+    * Runs all queued up executables for the current world.
     */
    def run(): Unit =
-      executables.foreach(_.execute())
+      executables.filter(exe => DataManager.getGroup(exe.group).exists(_.worlds.contains(exe.group))).foreach(exe => {
+         exe.execute()
+         executables -= exe
+      })
 
 /**
  * Companion object for [[User]].

@@ -3,3 +3,17 @@ version: 2.0-SNAPSHOT
 main: dev.hawu.plugins.queuedsudo
 description: Queue a /sudo until a player joins a world.
 author: Hawu
+commands:
+  queuedsudo:
+    aliases: [qs, qsudo]
+    usage: /<command> [args]
+    description: Queue a /sudo until a player joins a world.
+permissions:
+  queued-sudo.*:
+    default: false
+    description: Allows access to all permissions.
+    children:
+      queued-sudo.main: true
+  queued-sudo.main:
+    default: op
+    description: Allows access to the main command.

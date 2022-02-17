@@ -22,13 +22,14 @@ import scala.jdk.CollectionConverters.*
  */
 class RepeatingExecutable(
    uuid: UUID,
+   group: String,
    value: String,
    flag: ExecutableType,
    chat: Boolean,
    val delay: Long,
    val interval: Long,
    val times: Long,
-) extends Executable(uuid, value, flag, chat) :
+) extends Executable(uuid, group, value, flag, chat) :
 
    /**
     * Serializes this executable to a data map.
@@ -37,6 +38,7 @@ class RepeatingExecutable(
     */
    override def serialize(): util.Map[String, Any] = Map(
       "uuid" -> uuid.toString,
+      "group" -> group,
       "value" -> value,
       "flag" -> flag.ordinal,
       "chat" -> chat,
@@ -75,8 +77,8 @@ object RepeatingExecutable:
     * @return the executable
     */
    def deserialize(map: util.Map[String, Any]): RepeatingExecutable =
-      val (uuid, value, flag, chat) = Executable.unapplyFromMap(map)
+      val (uuid, group, value, flag, chat) = Executable.unapplyFromMap(map)
       val delay = map.get("delay").toString.toLong
       val interval = map.get("interval").toString.toLong
       val times = map.get("times").toString.toLong
-      RepeatingExecutable(uuid, value, flag, chat, delay, interval, times)
+      RepeatingExecutable(uuid, group, value, flag, chat, delay, interval, times)

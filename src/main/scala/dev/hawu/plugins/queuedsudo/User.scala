@@ -35,8 +35,17 @@ case class User(
    def run(): Unit =
       executables.foreach(_.execute())
 
+/**
+ * Companion object for [[User]].
+ */
 object User:
 
+   /**
+    * Deserializes the user from a map.
+    *
+    * @param map the map to deserialize
+    * @return the deserialized user
+    */
    def deserialize(map: util.Map[String, Any]): User =
       val uuid = UUID.fromString(map.get("uuid").toString)
       val executables = map.get("executables").asInstanceOf[util.List[Executable]].asScala.to(mutable.ArrayBuffer)

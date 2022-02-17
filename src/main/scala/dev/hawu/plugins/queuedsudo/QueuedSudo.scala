@@ -11,8 +11,11 @@ class QueuedSudo extends JavaPlugin :
    override def onEnable(): Unit =
       instance = Some(this)
       LocalI18n.onEnable(this)
+      DataManager.init(this)
+      BaseCommand(this)
 
    override def onDisable(): Unit =
+      DataManager.onDisable()
       LocalI18n.onDisable()
 
 /**

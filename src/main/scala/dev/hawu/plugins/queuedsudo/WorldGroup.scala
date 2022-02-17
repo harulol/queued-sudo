@@ -15,7 +15,7 @@ import scala.jdk.CollectionConverters.*
  * @param worlds the worlds in the group
  */
 case class WorldGroup(
-   name: String,
+   var name: String,
    worlds: mutable.Set[String] = mutable.Set[String](),
 ) extends ConfigurationSerializable :
 

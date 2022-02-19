@@ -41,7 +41,7 @@ class AwaitExecutable(
    ).asJava
 
    override def execute(): Unit =
-      Tasks.scheduleLater(QueuedSudo.getInstance, delay, runnable => super.execute())
+      Tasks.scheduleLater(QueuedSudo.instance, delay, runnable => super.execute())
 
    override def hashCode(): Int = HashCodeBuilder().append(uuid).append(group).append(value).append(flag).append(chat).append(delay).toHashCode
 

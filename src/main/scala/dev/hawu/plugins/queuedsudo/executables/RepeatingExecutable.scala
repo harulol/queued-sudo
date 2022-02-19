@@ -49,7 +49,7 @@ class RepeatingExecutable(
 
    override def execute(): Unit =
       var operations = 0
-      Tasks.scheduleTimer(QueuedSudo.getInstance, delay, interval, runnable => {
+      Tasks.scheduleTimer(QueuedSudo.instance, delay, interval, runnable => {
          if operations < times then
             super.execute()
             operations += 1

@@ -87,6 +87,13 @@ object DataManager:
       true
 
    /**
+    * Retrieves all groups.
+    *
+    * @return the groups
+    */
+   def getGroups: Iterable[WorldGroup] = groups.values
+
+   /**
     * Registers a user.
     *
     * @param u the user

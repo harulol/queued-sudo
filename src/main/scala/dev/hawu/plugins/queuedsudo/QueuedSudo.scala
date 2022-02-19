@@ -1,6 +1,6 @@
 package dev.hawu.plugins.queuedsudo
 
-import dev.hawu.plugins.queuedsudo.QueuedSudo.instance
+import dev.hawu.plugins.queuedsudo.QueuedSudo._instance
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin
 class QueuedSudo extends JavaPlugin :
 
    override def onEnable(): Unit =
-      instance = Some(this)
+      _instance = Some(this)
       LocalI18n.onEnable(this)
       DataManager.init(this)
       BaseCommand(this)
@@ -23,11 +23,21 @@ class QueuedSudo extends JavaPlugin :
  */
 object QueuedSudo:
 
-   private var instance: Option[QueuedSudo] = None
+   private var _instance: Option[QueuedSudo] = None
+   private var _version: Option[String] = None
 
    /**
     * Retrieves the singleton instance statically.
     *
     * @return the singleton instance
     */
-   def getInstance: QueuedSudo = instance.get
+   def instance: QueuedSudo = _instance.get
+
+   /**
+    * Retrieves the currently plugin version.
+    * @return the version
+    */
+   def version: String =
+      if _version.isEmpty then
+         _version = Some(instance.getDescription.getVersion)
+      _version.get   

@@ -1,8 +1,8 @@
 package dev.hawu.plugins.queuedsudo
 
-import org.bukkit.configuration.serialization.ConfigurationSerializable
 import dev.hawu.plugins.queuedsudo.executables.Executable
 import org.bukkit.Material
+import org.bukkit.configuration.serialization.ConfigurationSerializable
 
 import java.util
 import java.util.concurrent.atomic.AtomicInteger

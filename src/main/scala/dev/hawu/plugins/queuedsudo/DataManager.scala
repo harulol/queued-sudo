@@ -1,15 +1,15 @@
 package dev.hawu.plugins.queuedsudo
 
-import org.bukkit.{Bukkit, OfflinePlayer}
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.{Bukkit, OfflinePlayer}
 
 import java.io.File
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
-import scala.jdk.CollectionConverters.*
 import scala.collection.{GenIterable, GenMap, GenSeq, GenSet, mutable}
 import scala.concurrent.Future
+import scala.jdk.CollectionConverters.*
 
 /**
  * The main manager for the plugin, manipulating the data
@@ -19,7 +19,6 @@ object DataManager:
 
    private var plugin: Option[JavaPlugin] = None
    private val groups = mutable.Map[String, WorldGroup]()
-   private val worlds = mutable.Map[String, WorldGroup]()
    private val users = mutable.Map[UUID, User]()
 
    /**
@@ -135,7 +134,6 @@ object DataManager:
       if !file.exists() then return file.createNewFile()
       val config = YamlConfiguration.loadConfiguration(file)
       config.getList("groups").asInstanceOf[List[WorldGroup]].foreach(addGroup)
-      groups.values.foreach(g => g.worlds.foreach(w => worlds += (w -> g)))
 
    private def loadUsers(): Unit =
       val file = File(plugin.get.getDataFolder, "users.yml")

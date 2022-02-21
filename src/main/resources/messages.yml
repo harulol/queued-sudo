@@ -8,3 +8,5 @@ help:
     - "&asudo&f: Sudo-related command utility"
     - "&areload&f: Reload the plugin's config files"
 reloaded: "&a&l(!) &aReloaded messages."
+group-exists: "&c&l(!) &cThere is already an existing group with name &e%name%&c."
+group-rename-prompt: "&6&l(!) &6Please provide a new name for this group."

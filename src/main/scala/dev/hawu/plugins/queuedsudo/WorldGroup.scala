@@ -17,7 +17,7 @@ import scala.jdk.CollectionConverters.*
  */
 case class WorldGroup(
    var name: String,
-   var icon: Material,
+   var icon: Material = Material.CHEST,
    worlds: mutable.Set[String] = mutable.Set[String](),
 ) extends ConfigurationSerializable :
 

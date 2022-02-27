@@ -1,5 +1,6 @@
 package dev.hawu.plugins.queuedsudo
 
+import dev.hawu.plugins.api.collections.tuples.Pair
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.{Bukkit, OfflinePlayer}
@@ -7,6 +8,7 @@ import org.bukkit.{Bukkit, OfflinePlayer}
 import java.io.File
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
+import scala.annotation.targetName
 import scala.collection.{GenIterable, GenMap, GenSeq, GenSet, mutable}
 import scala.concurrent.Future
 import scala.jdk.CollectionConverters.*
@@ -128,6 +130,20 @@ object DataManager:
     * @return the user
     */
    def getUser(op: OfflinePlayer): Option[User] = getUser(op.getUniqueId)
+
+   /**
+    * Extension method for API pairs.
+    */
+   extension[L, R] (pair: Pair[L, R]) {
+
+      /**
+       * Extracts a pair.
+       *
+       * @return the pair
+       */
+      def unpack: (L, R) = (pair.getFirst, pair.getSecond)
+
+   }
 
    private def loadGroups(): Unit =
       val file = File(plugin.get.getDataFolder, "groups.yml")
